@@ -1,0 +1,13 @@
+//
+//  AppConfig.xcconfig
+//  MarvelTavern
+//
+//  Created by Paul Matar on 24/12/2022.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BASE_URL = gateway.marvel.com/v1/public/characters
+PUBLIC_KEY = 1
+PRIVATE_KEY = 2
