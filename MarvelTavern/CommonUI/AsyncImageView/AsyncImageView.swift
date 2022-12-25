@@ -14,12 +14,10 @@ final class AsyncImageView: UIImageView {
             dowloadImage()
         }
     }
-    
-    private var placeholder: UIImage?
-    
-    func setImage(_ imageUrl: String, placeholder: UIImage?) {
+            
+    func setImage(_ imageUrl: String?, placeholder: UIImage?) {
+        self.image = placeholder
         self.imageUrl = imageUrl
-        self.placeholder = placeholder
     }
     
     private func dowloadImage() {
@@ -33,7 +31,6 @@ final class AsyncImageView: UIImageView {
                 }
             } catch {
                 debugPrint(error)
-                image = placeholder
             }
         }
     }

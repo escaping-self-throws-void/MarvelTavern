@@ -8,6 +8,6 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-BASE_URL = gateway.marvel.com/v1/public/characters
-PUBLIC_KEY = 1
-PRIVATE_KEY = 2
+BASE_URL = gateway.marvel.com:443/v1/public
+PUBLIC_KEY = e18e6d4929d18df8d0df5b25e93296d9
+PRIVATE_KEY = 0b8af0116a30126ba9abccf8c45886ea836fc54d

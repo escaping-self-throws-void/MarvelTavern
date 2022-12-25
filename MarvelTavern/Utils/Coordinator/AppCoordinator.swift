@@ -19,7 +19,7 @@ final class AppCoordinator: BaseCoordinator {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
-        let coordinator = MainCoordinator()
+        let coordinator = HeroesCoordinator()
         coordinator.navigationController = navigationController
         start(coordinator)
     }

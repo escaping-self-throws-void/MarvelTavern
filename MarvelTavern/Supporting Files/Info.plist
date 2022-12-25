@@ -8,6 +8,10 @@
 	<string>$(PUBLIC_KEY)</string>
 	<key>BASE_URL</key>
 	<string>$(BASE_URL)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>BentonSansExtraComp-Black.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
