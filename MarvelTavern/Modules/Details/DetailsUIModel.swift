@@ -35,13 +35,13 @@ enum DetailsSection: Hashable, CaseIterable {
     var title: String {
         switch self {
         case .comics:
-            return "Comics"
+            return C.Text.comics
         case .events:
-            return "Events"
+            return C.Text.events
         case .stories:
-            return "Stories"
+            return C.Text.stories
         case .series:
-            return "Series"
+            return C.Text.series
         }
     }
 }

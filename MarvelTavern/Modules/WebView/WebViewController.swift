@@ -23,7 +23,7 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
     private lazy var progressSymbol: UIImageView = {
         let frame = CGRect(x: 0, y: 0, width: 37, height: 33)
         let iv = UIImageView(frame: frame)
-        let image = UIImage(systemName: "aqi.medium",
+        let image = UIImage(systemName: C.Images.aqi,
                             variableValue: progressValue)
         iv.image = image
         return iv
@@ -31,7 +31,7 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
     
     private var progressValue = 0.0 {
         didSet {
-            progressSymbol.image = UIImage(systemName: "aqi.medium",
+            progressSymbol.image = UIImage(systemName: C.Images.aqi,
                                            variableValue: progressValue)
         }
     }

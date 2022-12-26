@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25353819295A0FF300A4E6B3 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25353818295A0FF300A4E6B3 /* Throttler.swift */; };
+		2535381B295A1D3C00A4E6B3 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535381A295A1D3C00A4E6B3 /* UIImage+Extensions.swift */; };
+		2535381D295A1F5C00A4E6B3 /* NotFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535381C295A1F5C00A4E6B3 /* NotFoundView.swift */; };
+		25353823295A2A8800A4E6B3 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25353822295A2A8800A4E6B3 /* UILabel+Extensions.swift */; };
 		25FAC87B2957370A00168A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FAC87A2957370A00168A7C /* AppDelegate.swift */; };
 		25FAC87D2957370A00168A7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FAC87C2957370A00168A7C /* SceneDelegate.swift */; };
 		25FAC8842957370A00168A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25FAC8832957370A00168A7C /* Assets.xcassets */; };
@@ -48,6 +52,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		25353818295A0FF300A4E6B3 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
+		2535381A295A1D3C00A4E6B3 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		2535381C295A1F5C00A4E6B3 /* NotFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundView.swift; sourceTree = "<group>"; };
+		25353822295A2A8800A4E6B3 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		25FAC8772957370A00168A7C /* MarvelTavern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelTavern.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25FAC87A2957370A00168A7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25FAC87C2957370A00168A7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +109,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2535381E295A20C400A4E6B3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2535381C295A1F5C00A4E6B3 /* NotFoundView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		25FAC86E2957370A00168A7C = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +177,8 @@
 				25FAC8D629585BEA00168A7C /* UIView+Extensions.swift */,
 				25FAC8F12958C8CF00168A7C /* Sequence+Extensions.swift */,
 				25FAC8F52958D12E00168A7C /* UICollectionReusableView+Extensions.swift */,
+				2535381A295A1D3C00A4E6B3 /* UIImage+Extensions.swift */,
+				25353822295A2A8800A4E6B3 /* UILabel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -203,6 +221,7 @@
 				25FAC8C5295787D700168A7C /* API Service */,
 				25FAC8A529573EE200168A7C /* HTTP Service */,
 				25FAC8A429573ECB00168A7C /* Image Loader */,
+				25353818295A0FF300A4E6B3 /* Throttler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -254,6 +273,7 @@
 		25FAC8AE2957413D00168A7C /* Heroes */ = {
 			isa = PBXGroup;
 			children = (
+				2535381E295A20C400A4E6B3 /* UI */,
 				25FAC8AF2957417100168A7C /* HeroesCoordinator.swift */,
 				25FAC8B1295741A200168A7C /* HeroesViewModel.swift */,
 				25FAC8B3295741D000168A7C /* HeroesViewController.swift */,
@@ -419,6 +439,7 @@
 				25FAC8E329587C1A00168A7C /* DetailsViewModel.swift in Sources */,
 				25FAC8D5295839B900168A7C /* HeroesUIModel.swift in Sources */,
 				25FAC8E129587C0E00168A7C /* DetailsUIModel.swift in Sources */,
+				25353823295A2A8800A4E6B3 /* UILabel+Extensions.swift in Sources */,
 				25FAC8BE2957687400168A7C /* Detail.swift in Sources */,
 				25FAC8C7295787F600168A7C /* APIEndpoint.swift in Sources */,
 				25FAC8BC2957685700168A7C /* Image.swift in Sources */,
@@ -426,7 +447,9 @@
 				25FAC89C29573DEA00168A7C /* AutoLayoutDSL.swift in Sources */,
 				25FAC8D729585BEA00168A7C /* UIView+Extensions.swift in Sources */,
 				25FAC8E529587C2200168A7C /* DetailsViewController.swift in Sources */,
+				2535381B295A1D3C00A4E6B3 /* UIImage+Extensions.swift in Sources */,
 				25FAC8A929573F1A00168A7C /* HTTPError.swift in Sources */,
+				25353819295A0FF300A4E6B3 /* Throttler.swift in Sources */,
 				25FAC8F22958C8CF00168A7C /* Sequence+Extensions.swift in Sources */,
 				25FAC8F42958CB1F00168A7C /* DetailsHeaderView.swift in Sources */,
 				25FAC8A329573E9F00168A7C /* ImageCache.swift in Sources */,
@@ -435,6 +458,7 @@
 				25FAC89F29573E3600168A7C /* Constants.swift in Sources */,
 				25FAC8B2295741A200168A7C /* HeroesViewModel.swift in Sources */,
 				25FAC8A729573F1000168A7C /* HTTPClient.swift in Sources */,
+				2535381D295A1F5C00A4E6B3 /* NotFoundView.swift in Sources */,
 				25FAC8B4295741D000168A7C /* HeroesViewController.swift in Sources */,
 				25FAC87D2957370A00168A7C /* SceneDelegate.swift in Sources */,
 				25FAC8B829574CEE00168A7C /* AsyncImageView.swift in Sources */,

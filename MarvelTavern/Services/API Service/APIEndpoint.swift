@@ -9,6 +9,7 @@ import Foundation
 
 enum APIEndpoint {
     case heroes
+    case heroesBy(name: String)
     case comics(id: Int)
     case events(id: Int)
     case series(id: Int)
@@ -20,6 +21,8 @@ extension APIEndpoint: Endpoint {
         switch self {
         case .heroes:
             return "/characters\(authPath)"
+        case .heroesBy(name: let name):
+            return "/characters\(authPath)&nameStartsWith=\(name.query)"
         case .comics(id: let id):
             return "/characters/\(id)/comics\(authPath)"
         case .events(id: let id):

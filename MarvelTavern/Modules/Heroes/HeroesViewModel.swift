@@ -10,6 +10,7 @@ import Combine
 protocol HeroesViewModel {
     var heroes: CurrentValueSubject<[HeroItem], Never> { get }
     func getHeroes()
+    func getHeroes(by name: String)
     func openDetails(_ data: Any)
 }
 
@@ -18,7 +19,7 @@ final class HeroesViewModelImpl: HeroesViewModel {
         
     private let coordinator: HeroesCoordinator
     private let service: APIService
-    
+        
     init(service: APIService, _ coordinator: HeroesCoordinator) {
         self.service = service
         self.coordinator = coordinator
@@ -35,6 +36,19 @@ final class HeroesViewModelImpl: HeroesViewModel {
         }
     }
     
+    func getHeroes(by name: String) {
+        heroes.send(HeroItem.loadingItems)
+        
+        Task { @MainActor in
+            do {
+                let fetchedData = try await service.fetchHeroes(by: name)
+                heroes.send(fetchedData.map(HeroItem.heroes))
+            } catch {
+                debugPrint(error)
+            }
+        }
+    }
+
     func openDetails(_ data: Any) {
         coordinator.startDetailsScreen(data)
     }

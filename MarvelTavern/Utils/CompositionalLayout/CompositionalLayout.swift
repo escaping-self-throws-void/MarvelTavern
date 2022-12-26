@@ -35,19 +35,4 @@ struct CompositionalLayout {
             return NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: items)
         }
     }
-    
-    static func createGroup(alignment: Alignment,
-                            width: NSCollectionLayoutDimension,
-                            height: NSCollectionLayoutDimension,
-                            item: NSCollectionLayoutItem,
-                            count: Int) -> NSCollectionLayoutGroup {
-        let size = NSCollectionLayoutSize(widthDimension: width, heightDimension: height)
-        
-        switch alignment {
-        case .vertical:
-            return NSCollectionLayoutGroup.vertical(layoutSize: size, subitem: item, count: count)
-        case .horizontal:
-            return NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: count)
-        }
-    }
 }

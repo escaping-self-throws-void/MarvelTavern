@@ -19,4 +19,8 @@ extension String {
     var https: String {
         replacingOccurrences(of: "http", with: "https")
     }
+    
+    var query: String {
+        replacingOccurrences(of: " ", with: "%20")
+    }
 }

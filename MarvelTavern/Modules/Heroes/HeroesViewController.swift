@@ -20,9 +20,22 @@ final class HeroesViewController: UIViewController {
                                 height: size.height * 0.35)
         let cv = UICollectionView(frame: .zero,
                                   collectionViewLayout: layout)
+        cv.keyboardDismissMode = .onDrag
         cv.backgroundColor = .clear
         cv.delegate = self
         return cv
+    }()
+    
+    private lazy var searchBar: UISearchBar = {
+        let sb = UISearchBar()
+        sb.delegate = self
+        return sb
+    }()
+    
+    private lazy var notFoundView: NotFoundView = {
+        let view = NotFoundView()
+        view.isHidden = true
+        return view
     }()
     
     private lazy var dataSource = configureDataSource()
@@ -53,6 +66,7 @@ final class HeroesViewController: UIViewController {
 extension HeroesViewController {
     private func initialize() {
         setupUI()
+        dismissKeyboardOnTap()
         bindViewModel()
         viewModel.getHeroes()
     }
@@ -62,31 +76,95 @@ extension HeroesViewController {
             .leading,
             .trailing,
             .bottom(to: view.safeAreaLayoutGuide, .bottom),
-            .top(to: view.safeAreaLayoutGuide, .top, padding: 15)
+            .top(padding: 110)
+        )
+        
+        notFoundView.place(on: view).pin(
+            .leading,
+            .trailing,
+            .centerX,
+            .top(to: view.safeAreaLayoutGuide, .top, padding: 20)
         )
     }
     
     private func setupUI() {
         view.backgroundColor = .black
-        let logo = UIImage(named: C.Images.logo)
-        let imageView = UIImageView(image: logo)
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
+        navigationController?.navigationBar.tintColor = .init(named: C.Colors.marvelRed)
+        navigationItem.titleView = showLogo()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                            style: .plain,
                                                            target: nil,
                                                            action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
+                                                            target: self,
+                                                            action: #selector(searchTapped))
+    }
+
+    private func dismissKeyboardOnTap() {
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    private func showSearchBar(_ show: Bool) {
+        navigationItem.rightBarButtonItem?.isHidden = show
+        navigationItem.titleView = show ? searchBar : showLogo()
+        searchBar.showsCancelButton = show
     }
     
+    private func showLogo() -> UIView {
+        let logo = UIImage(named: C.Images.logo)
+        let imageView = UIImageView(image: logo)
+        imageView.contentMode = .scaleAspectFit
+
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 120, height: 44))
+        imageView.frame = titleView.bounds
+        titleView.addSubview(imageView)
+        return titleView
+    }
+
     private func bindViewModel() {
         viewModel.heroes
             .receive(on: RunLoop.main)
             .sink { [weak self] heroes in
                 guard let self else { return }
-                
                 self.dataSource.apply(self.makeSnapshot(heroes),
                                       animatingDifferences: true)
+                self.notFoundView.isHidden = !heroes.isEmpty
             }.store(in: &cancellables)
+    }
+}
+
+// MARK: - Actions
+extension HeroesViewController {
+    @objc
+    private func searchTapped() {
+        showSearchBar(true)
+        searchBar.becomeFirstResponder()
+    }
+    
+    @objc
+    private func hideKeyboard() {
+         searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension HeroesViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        showSearchBar(false)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else { return }
+        Throttler.shared.throttle(for: 0.6) { [weak self] in
+            self?.viewModel.getHeroes(by: searchText)
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 

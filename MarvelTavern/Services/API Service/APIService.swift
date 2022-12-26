@@ -9,16 +9,21 @@ import Foundation
 
 protocol APIService {
     func fetchHeroes() async throws -> [Hero]
+    func fetchHeroes(by name: String) async throws -> [Hero]
     func fetchDetails(by id: Int) async throws -> [DetailsSection]
 }
 
 struct APIServiceImpl: HTTPClient, APIService {
     func fetchHeroes() async throws -> [Hero] {
         let data: HeroDataWrapper = try await sendRequest(endpoint: APIEndpoint.heroes)
-        
-        let result = data.data?.results
-        
-        return result ?? []
+
+        return data.data?.results ?? []
+    }
+    
+    func fetchHeroes(by name: String) async throws -> [Hero] {
+        let data: HeroDataWrapper = try await sendRequest(endpoint: APIEndpoint.heroesBy(name: name))
+                
+        return data.data?.results ?? []
     }
     
     func fetchDetails(by id: Int) async throws -> [DetailsSection] {

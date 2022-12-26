@@ -102,7 +102,6 @@ extension DetailsViewController {
                 section.interGroupSpacing = 15
                 section.contentInsets = .init(top: 0, leading: 15, bottom: 30, trailing: 15)
                 section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
                 return section
             case .series:
                 let item = CompositionalLayout.createItem(width: .fractionalWidth(1), height: .fractionalHeight(1), padding: 0)
@@ -112,7 +111,6 @@ extension DetailsViewController {
                 section.interGroupSpacing = 15
                 section.contentInsets = .init(top: 0, leading: 15, bottom: 30, trailing: 15)
                 section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
                 return section
             case .events, .stories:
                 let item = CompositionalLayout.createItem(width: .fractionalWidth(1), height: .fractionalHeight(1), padding: 0)
@@ -122,7 +120,6 @@ extension DetailsViewController {
                 section.interGroupSpacing = 15
                 section.contentInsets = .init(top: 0, leading: 15, bottom: 30, trailing: 15)
                 section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
                 return section
             }
         }
@@ -131,7 +128,7 @@ extension DetailsViewController {
     private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),
               elementKind: UICollectionView.elementKindSectionHeader,
-              alignment: .topLeading)
+              alignment: .top)
     }
 }
 

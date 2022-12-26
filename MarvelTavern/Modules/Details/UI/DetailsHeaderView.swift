@@ -27,7 +27,7 @@ final class DetailsHeaderView: UICollectionReusableView {
     
     private func layoutViews() {
         titleLabel.place(on: self).pin(
-            .leading(padding: 15),
+            .leading,
             .trailing(padding: 15),
             .bottom(padding: 5),
             .top(padding: 5)
