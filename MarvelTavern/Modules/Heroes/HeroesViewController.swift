@@ -12,7 +12,7 @@ final class HeroesViewController: UIViewController {
         
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = .init(top: 15, left: 15, bottom: 15, right: 15)
+        layout.sectionInset = .init(top: 0, left: 0, bottom: 15, right: 0)
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 30
         let size = view.bounds.size
@@ -25,9 +25,9 @@ final class HeroesViewController: UIViewController {
         return cv
     }()
     
-    private var dataSource: HeroesDataSource!
-    private let viewModel: HeroesViewModel
+    private lazy var dataSource = configureDataSource()
     private var cancellables = Set<AnyCancellable>()
+    private let viewModel: HeroesViewModel
 
     init(_ viewModel: HeroesViewModel) {
         self.viewModel = viewModel
@@ -52,9 +52,7 @@ final class HeroesViewController: UIViewController {
 // MARK: - Private methods
 extension HeroesViewController {
     private func initialize() {
-        view.backgroundColor = .black
-        setupNavigationBar()
-        configureDataSource()
+        setupUI()
         bindViewModel()
         viewModel.getHeroes()
     }
@@ -68,24 +66,50 @@ extension HeroesViewController {
         )
     }
     
-    private func setupNavigationBar() {
+    private func setupUI() {
+        view.backgroundColor = .black
         let logo = UIImage(named: C.Images.logo)
         let imageView = UIImageView(image: logo)
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                           style: .plain,
+                                                           target: nil,
+                                                           action: nil)
     }
     
     private func bindViewModel() {
-        viewModel.refresh
+        viewModel.heroes
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] heroes in
                 guard let self else { return }
                 
-                self.dataSource.apply(
-                    self.makeSnapshot(),
-                    animatingDifferences: true
-                )
+                self.dataSource.apply(self.makeSnapshot(heroes),
+                                      animatingDifferences: true)
             }.store(in: &cancellables)
+    }
+}
+
+// MARK: - Diffable Data Source Setup
+extension HeroesViewController {
+    fileprivate typealias HeroesDataSource = UICollectionViewDiffableDataSource<HeroSection, HeroItem>
+    fileprivate typealias HeroesSnapshot = NSDiffableDataSourceSnapshot<HeroSection, HeroItem>
+    
+    private func configureDataSource() -> HeroesDataSource {
+        let cellRegistration = UICollectionView.CellRegistration<CollectionCell, HeroItem> { cell, _, model in
+            cell.configure(with: model)
+        }
+        
+        return HeroesDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+        }
+    }
+    
+    private func makeSnapshot(_ items: [HeroItem]) -> HeroesSnapshot {
+        var snapshot = HeroesSnapshot()
+        snapshot.appendSections([.heroes])
+        snapshot.appendItems(items, toSection: .heroes)
+        return snapshot
     }
 }
 
@@ -93,36 +117,12 @@ extension HeroesViewController {
 extension HeroesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-
-    }
-}
-
-
-// MARK: - Diffable Data Source Setup
-extension HeroesViewController {
-    fileprivate typealias HeroesDataSource = UICollectionViewDiffableDataSource<HeroSection, HeroItem>
-    fileprivate typealias HeroesSnapshot = NSDiffableDataSourceSnapshot<HeroSection, HeroItem>
-    
-    private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<HeroCell, HeroItem> { cell, _, model in
-            cell.configure(with: model)
+        guard let model = dataSource.itemIdentifier(for: indexPath) else { return }
+        switch model {
+        case .loading(_): break
+        case .heroes(let hero):
+            guard let id = hero.id else { break }
+            viewModel.goToDetails(id)
         }
-        
-        dataSource = HeroesDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
-            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-        }
-        
-        dataSource.apply(makeSnapshot(), animatingDifferences: false)
-    }
-    
-    private func makeSnapshot() -> HeroesSnapshot {
-        var snapshot = HeroesSnapshot()
-        snapshot.appendSections([.heroes])
-        
-        viewModel.heroes.isEmpty
-            ? snapshot.appendItems(HeroItem.loadingItems, toSection: .heroes)
-            : snapshot.appendItems(viewModel.heroes.map(HeroItem.heroes), toSection: .heroes)
-        
-        return snapshot
     }
 }

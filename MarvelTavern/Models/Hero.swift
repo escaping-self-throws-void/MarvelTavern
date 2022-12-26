@@ -12,7 +12,6 @@ struct HeroDataWrapper: Codable {
 }
 
 struct HeroDataContainer: Codable {
-    let total: Int?
     let results: [Hero]?
 }
 

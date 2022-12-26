@@ -29,7 +29,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.shadowColor = .clear
-        
+        navigationBarAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor(named: C.Colors.marvelRed) ?? .red,
+            .font: UIFont(name: C.Fonts.marvelFont, size: 30) ?? .systemFont(ofSize: 30)
+        ]
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance

@@ -9,24 +9,36 @@ import Foundation
 
 enum APIEndpoint {
     case heroes
+    case comics(id: Int)
+    case events(id: Int)
+    case series(id: Int)
+    case stories(id: Int)
 }
 
 extension APIEndpoint: Endpoint {
     var path: String {
         switch self {
         case .heroes:
-            let ts = String(Date().timeIntervalSince1970)
-            let hash = (ts + privateKey + publicKey).MD5
-            
-            return "/characters?ts=\(ts)&apikey=\(publicKey)&hash=\(hash)"
+            return "/characters\(authPath)"
+        case .comics(id: let id):
+            return "/characters/\(id)/comics\(authPath)"
+        case .events(id: let id):
+            return "/characters/\(id)/events\(authPath)"
+        case .series(id: let id):
+            return "/characters/\(id)/series\(authPath)"
+        case .stories(id: let id):
+            return "/characters/\(id)/stories\(authPath)"
         }
     }
     
     var method: RequestMethod {
-        switch self {
-        case .heroes:
-            return .GET
-        }
+        .GET
+    }
+    
+    private var authPath: String {
+        let ts = String(Date().timeIntervalSince1970)
+        let hash = (ts + privateKey + publicKey).MD5
+        return "?ts=\(ts)&apikey=\(publicKey)&hash=\(hash)"
     }
     
     private var privateKey: String {

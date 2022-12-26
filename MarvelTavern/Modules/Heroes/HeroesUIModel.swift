@@ -15,15 +15,6 @@ enum HeroItem: Hashable {
     case loading(UUID)
     case heroes(Hero)
     
-    var isLoading: Bool {
-        switch self {
-        case .loading(_):
-            return true
-        default:
-            return false
-        }
-    }
-    
     static var loadingItems: [HeroItem] {
         Array(repeatingExpression: HeroItem.loading(UUID()), count: 8)
     }

@@ -15,4 +15,8 @@ extension String {
         
         return hash.map { String(format: "%02hhx", $0) }.joined()
     }
+    
+    var https: String {
+        replacingOccurrences(of: "http", with: "https")
+    }
 }

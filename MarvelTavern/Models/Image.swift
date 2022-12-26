@@ -12,8 +12,7 @@ struct Image: Codable {
     let _extension: String?
     
     var stringUrl: String {
-        "\(path ?? "").\(_extension ?? "")"
-            .replacingOccurrences(of: "http", with: "https")
+        "\(path ?? "").\(_extension ?? "")".https
     }
     
     enum CodingKeys: String, CodingKey {

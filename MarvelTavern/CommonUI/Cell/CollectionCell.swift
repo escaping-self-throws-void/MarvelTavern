@@ -1,5 +1,5 @@
 //
-//  HeroCell.swift
+//  CollectionCell.swift
 //  MarvelTavern
 //
 //  Created by Paul Matar on 24/12/2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HeroCell: UICollectionViewCell {
+final class CollectionCell: UICollectionViewCell {
     
     private lazy var imageView: AsyncImageView = {
         let iv = AsyncImageView()
@@ -47,6 +47,17 @@ final class HeroCell: UICollectionViewCell {
         }
     }
     
+    func configure(with model: DetailsItem) {
+        switch model {
+        case .loading(_):
+            showLoading()
+        case .details(let detail):
+            nameLabel.text = detail.title
+            let placeholder = UIImage(named: C.Images.placeholder)
+            imageView.setImage(detail.thumbnail?.stringUrl, placeholder: placeholder)
+        }
+    }
+    
     private func showLoading() {
         let marvelRed = UIColor(named: C.Colors.marvelRed) ?? .red
         contentView.shimmer(with: marvelRed)
@@ -57,11 +68,11 @@ final class HeroCell: UICollectionViewCell {
             .top,
             .trailing,
             .leading,
-            .fixedHeight(contentView.bounds.height * 0.88)
+            .height(to: contentView, padding: -30)
         )
         
         nameLabel.place(on: contentView).pin(
-            .bottom,
+            .top(to: imageView, .bottom, padding: 10),
             .trailing,
             .leading
         )

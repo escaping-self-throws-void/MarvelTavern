@@ -10,7 +10,6 @@ import Foundation
 enum C {
     enum Fonts {
         static let marvelFont = "BentonSansExtraComp-Black"
-        static let marvel = "Marvel"
     }
     
     enum Images {
@@ -20,9 +19,5 @@ enum C {
     
     enum Colors {
         static let marvelRed = "marvelRed"
-    }
-    
-    enum Text {
-
     }
 }
