@@ -1,5 +1,5 @@
 //
-//  DetailsViewModel.swift
+//  DetailsViewModelImpl.swift
 //  MarvelTavern
 //
 //  Created by Paul Matar on 25/12/2022.
@@ -8,16 +8,15 @@
 import Foundation
 import Combine
 
-protocol DetailsViewModelProtocol {
+protocol DetailsViewModel {
     var sections: CurrentValueSubject<[DetailsSection], Never> { get }
     func getDetails()
     func setTitle() ->  String
     func openWebview(_ url: URL)
 }
 
-final class DetailsViewModel: DetailsViewModelProtocol {
+final class DetailsViewModelImpl: DetailsViewModel {
     private(set) var sections = CurrentValueSubject<[DetailsSection], Never>(DetailsSection.allCases)
-    
     
     private let service: APIService
     private let coordinator: HeroesCoordinator

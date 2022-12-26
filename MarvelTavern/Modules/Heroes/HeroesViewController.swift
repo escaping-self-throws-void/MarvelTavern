@@ -122,7 +122,7 @@ extension HeroesViewController: UICollectionViewDelegate {
         case .loading(_): break
         case .heroes(let hero):
             guard let id = hero.id else { break }
-            viewModel.goToDetails(id)
+            viewModel.openDetails(id)
         }
     }
 }

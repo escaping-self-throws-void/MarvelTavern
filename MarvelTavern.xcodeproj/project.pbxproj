@@ -190,8 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				25FAC8B9295763E500168A7C /* Hero.swift */,
-				25FAC8BB2957685700168A7C /* Image.swift */,
 				25FAC8BD2957687400168A7C /* Detail.swift */,
+				25FAC8BB2957685700168A7C /* Image.swift */,
 				25FAC8FA29597D7C00168A7C /* Url.swift */,
 			);
 			path = Models;

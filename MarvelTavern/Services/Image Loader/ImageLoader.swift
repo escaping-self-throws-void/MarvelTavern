@@ -21,7 +21,6 @@ actor ImageLoader {
         }
         
         if let cachedImage = imageCache.getImage(forKey: url.lastPathComponent) {
-            debugPrint("Image from cache: ", url.lastPathComponent)
             return cachedImage
         }
         
@@ -40,8 +39,6 @@ actor ImageLoader {
         }
 
         imageCache.saveImage(image, forKey: url.lastPathComponent)
-        
-        debugPrint("Image from network: ", url.lastPathComponent)
         
         return image
     }

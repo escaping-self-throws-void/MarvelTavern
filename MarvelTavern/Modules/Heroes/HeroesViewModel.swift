@@ -10,7 +10,7 @@ import Combine
 protocol HeroesViewModel {
     var heroes: CurrentValueSubject<[HeroItem], Never> { get }
     func getHeroes()
-    func goToDetails(_ data: Any)
+    func openDetails(_ data: Any)
 }
 
 final class HeroesViewModelImpl: HeroesViewModel {
@@ -35,7 +35,7 @@ final class HeroesViewModelImpl: HeroesViewModel {
         }
     }
     
-    func goToDetails(_ data: Any) {
-        coordinator.openDetailsScreen(data)
+    func openDetails(_ data: Any) {
+        coordinator.startDetailsScreen(data)
     }
 }

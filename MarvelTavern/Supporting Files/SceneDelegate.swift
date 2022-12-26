@@ -33,6 +33,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .foregroundColor: UIColor(named: C.Colors.marvelRed) ?? .red,
             .font: UIFont(name: C.Fonts.marvelFont, size: 30) ?? .systemFont(ofSize: 30)
         ]
+        navigationBarAppearance.backButtonAppearance.normal.titleTextAttributes = [
+            .font: UIFont(name: C.Fonts.marvelFont, size: 22) ?? .systemFont(ofSize: 22)
+        ]
+
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance

@@ -25,9 +25,9 @@ final class DetailsViewController: UIViewController {
     
     private lazy var dataSource = configureDataSource()
     private var cancellables = Set<AnyCancellable>()
-    private let viewModel: DetailsViewModelProtocol
+    private let viewModel: DetailsViewModel
     
-    init(_ viewModel: DetailsViewModelProtocol) {
+    init(_ viewModel: DetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -140,7 +140,6 @@ extension DetailsViewController {
         let cellRegistration = UICollectionView.CellRegistration<CollectionCell, DetailsItem> { cell, _, model in
             cell.configure(with: model)
         }
-        
         
         let dataSource = DetailsDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)

@@ -15,8 +15,8 @@ final class HeroesCoordinator: BaseCoordinator {
         navigationController.setViewControllers([viewController], animated: false)
     }
     
-    func openDetailsScreen(_ data: Any) {
-        let viewModel = DetailsViewModel(service: APIServiceImpl(), data: data, self)
+    func startDetailsScreen(_ data: Any) {
+        let viewModel = DetailsViewModelImpl(service: APIServiceImpl(), data: data, self)
         let viewController = DetailsViewController(viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }

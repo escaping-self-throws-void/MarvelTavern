@@ -14,10 +14,16 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
         let prefs = WKWebpagePreferences()
         prefs.allowsContentJavaScript = true
         let config = WKWebViewConfiguration()
-        let webView = WKWebView(frame: .zero, configuration: config)
+        let webView = WKWebView()
         webView.navigationDelegate = self
         webView.allowsBackForwardNavigationGestures = true
         return webView
+    }()
+    
+    private lazy var progressView: UIProgressView = {
+        let view = UIProgressView(progressViewStyle: .default)
+        view.sizeToFit()
+        return view
     }()
     
     private let url: URL
@@ -37,6 +43,22 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initialize()
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard keyPath == "estimatedProgress" else { return }
+        progressView.isHidden = webView.estimatedProgress == 1.0
+        progressView.progress = Float(webView.estimatedProgress)
+    }
+    
+    private func initialize() {
+        webView.addObserver(self,
+                            forKeyPath: #keyPath(WKWebView.estimatedProgress),
+                            options: .new,
+                            context: nil)
+        let progressButton = UIBarButtonItem(customView: progressView)
+        navigationItem.rightBarButtonItem = progressButton
         webView.load(.init(url: url))
     }
 }
