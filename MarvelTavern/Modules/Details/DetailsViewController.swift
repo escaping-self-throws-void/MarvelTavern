@@ -68,6 +68,10 @@ extension DetailsViewController {
         view.backgroundColor = .black
         navigationItem.title = viewModel.setTitle()
         navigationController?.navigationBar.tintColor = .init(named: C.Colors.marvelRed)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                           style: .plain,
+                                                           target: nil,
+                                                           action: nil)
     }
     
     private func bindViewModel() {

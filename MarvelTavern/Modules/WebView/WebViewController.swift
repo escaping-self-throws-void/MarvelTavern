@@ -19,13 +19,23 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
         webView.allowsBackForwardNavigationGestures = true
         return webView
     }()
-    
-    private lazy var progressView: UIProgressView = {
-        let view = UIProgressView(progressViewStyle: .default)
-        view.sizeToFit()
-        return view
+        
+    private lazy var progressSymbol: UIImageView = {
+        let frame = CGRect(x: 0, y: 0, width: 37, height: 33)
+        let iv = UIImageView(frame: frame)
+        let image = UIImage(systemName: "aqi.medium",
+                            variableValue: progressValue)
+        iv.image = image
+        return iv
     }()
     
+    private var progressValue = 0.0 {
+        didSet {
+            progressSymbol.image = UIImage(systemName: "aqi.medium",
+                                           variableValue: progressValue)
+        }
+    }
+
     private let url: URL
     
     init(url: URL) {
@@ -48,8 +58,12 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard keyPath == "estimatedProgress" else { return }
-        progressView.isHidden = webView.estimatedProgress == 1.0
-        progressView.progress = Float(webView.estimatedProgress)
+        progressSymbol.isHidden = webView.estimatedProgress == 1.0
+        progressValue = webView.estimatedProgress
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        title = webView.title
     }
     
     private func initialize() {
@@ -57,7 +71,7 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
                             forKeyPath: #keyPath(WKWebView.estimatedProgress),
                             options: .new,
                             context: nil)
-        let progressButton = UIBarButtonItem(customView: progressView)
+        let progressButton = UIBarButtonItem(customView: progressSymbol)
         navigationItem.rightBarButtonItem = progressButton
         webView.load(.init(url: url))
     }

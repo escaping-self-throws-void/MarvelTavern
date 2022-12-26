@@ -31,10 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationBarAppearance.shadowColor = .clear
         navigationBarAppearance.titleTextAttributes = [
             .foregroundColor: UIColor(named: C.Colors.marvelRed) ?? .red,
-            .font: UIFont(name: C.Fonts.marvelFont, size: 30) ?? .systemFont(ofSize: 30)
-        ]
-        navigationBarAppearance.backButtonAppearance.normal.titleTextAttributes = [
-            .font: UIFont(name: C.Fonts.marvelFont, size: 22) ?? .systemFont(ofSize: 22)
+            .font: UIFont(name: C.Fonts.marvelFont, size: 24) ?? .systemFont(ofSize: 24)
         ]
 
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
